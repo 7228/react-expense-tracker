@@ -1,0 +1,86 @@
+.expense-bar {
+    position: relative;
+    margin-top: 50px !important;
+    margin: auto;
+    height: 250px;
+    width: 250px;
+    /*background: conic-gradient(red 4deg, #ededed 0deg);*/
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow:10px 6px 10px -1px rgba(90, 90, 90, 0.7);
+}
+
+
+.expense-bar::before {
+    content: "";
+    background-color: #000 !important;
+    position: absolute;
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+}
+
+.expenses-container > h2 {
+    margin: auto;
+    margin-top: 30px;
+    outline: 1px solid white;
+    padding: 20px;
+    width: fit-content;
+}
+
+.expense-info {
+    margin:45px auto;
+    width: 90%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 30px 30px 30px 30px;
+    row-gap: 22px;
+    column-gap: 0;
+}
+
+.info {
+    height: 23px;
+    width: 23px;
+}
+
+.legend-container {
+    display: flex;
+}
+
+.legend-description {
+    text-align: left;
+}
+
+.bills {
+    background-color: red;
+}
+
+.food {
+    background-color: orange;
+}
+
+.travel {
+    background-color: blue;
+}
+
+.entertainment {
+    background-color: yellow;
+}
+
+.beauty {
+    background-color: purple;
+}
+
+.car {
+    background-color: #2ae84a;
+}
+
+.children {
+    background-color: brown;
+}
+
+.other {
+    background-color: white;
+}

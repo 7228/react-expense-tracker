@@ -1,23 +1,28 @@
-import logo from './logo.svg';
+import { Routes, Route } from 'react-router';
 import './App.css';
 
+import Home from "./pages/Home";
+import Main from './pages/Main';
+import AppContext from './AppContext';
+import { useState } from 'react';
+
 function App() {
+  const [stats, setStats] = useState({});
+  const [expenses, setExpenses] = useState({
+    absolute: [],
+    total: 0
+  });
+  //Euros:
+ 
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <AppContext.Provider value={{stats, setStats, expenses, setExpenses}}>
+      <Routes>
+        <Route path='/' element={<Home />}></Route>
+        <Route path='/main' element={<Main />}></Route>
+      </Routes>
+      </AppContext.Provider>
     </div>
   );
 }
