@@ -87,6 +87,7 @@ export default function Main() {
                         <h2 className="balance-total">{stats.percentage.total - expenses?.total}€</h2>
                         <form className="add-item" onSubmit={submitForm}>
                             <select className="category field" name="category">
+                                <input className="field" name="type"></input>
                                 <option>Bills</option>
                                 <option>Food and Drinks</option>
                                 <option>Travel</option>
