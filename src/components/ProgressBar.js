@@ -4,28 +4,41 @@ import "./ProgressBar.css"
 import AppContext from "../AppContext";
 
 
-export default function ProgressBar(props) {
+export default function ProgressBar() {
     const [percentage, setPercentage] = useState(0);
     const {stats, setStats} = useContext(AppContext);
+
+    const salaryPercentage = Math.round(stats.absolute.salary/stats.percentage.total * 100)
+    const sideIncomePercentage = Math.round(stats.absolute.sideIncome/stats.percentage.total * 100)
+    const giftsPercentage = Math.round(stats.absolute.gifts/stats.percentage.total * 100);
+    const otherPercentage = Math.round(stats.absolute.other/stats.percentage.total * 100);
     
-    const sideIncomeStart = stats.percentage.salary() * 3.6;
-    const sideIncomeEnds = sideIncomeStart + stats.percentage.sideIncome() * 3.6;
-    const giftsStart = sideIncomeStart + sideIncomeEnds;
-    const giftsEnd = 360 - stats.percentage.other() * 3.6; 
+    const sideIncomeStart = Math.round(salaryPercentage * 3.6);
+    const sideIncomeEnds = Math.round(sideIncomeStart + sideIncomePercentage * 3.6);
+    const giftsStart = sideIncomeEnds + 1;
+    const giftsEnd = 360 - Math.round(giftsPercentage * 3.6); 
     
     
-    useEffect(() => {
+    console.log("sal-end", Math.round(percentage * 3.6), "sajd-start:",sideIncomeStart, "sajd-end:",sideIncomeEnds,"gifts-start", giftsStart, "gifts-end", giftsEnd,"other-start:", giftsEnd)
+    /*useEffect(() => {
        
         setTimeout(() => {
-        if (percentage < stats.percentage.salary()) {
+        if (percentage < salaryPercentage) {
             setPercentage(percentage + 1);
         }
         }, 50);
         
-    }, [percentage]);
+    }, [percentage]);*/
+
+    const conicGradient = `conic-gradient(
+        #2ae84a ${salaryPercentage * 3.6}deg,
+        #0c48c9 ${sideIncomeStart}deg, #0c48c9 ${sideIncomeEnds}deg,
+        orange ${giftsStart}deg, orange ${giftsEnd}deg,
+        green ${giftsEnd}deg
+    )`
     
     const ProgressBarStyle = {
-        background:`conic-gradient(#2ae84a ${percentage * 3.6}deg, #0c48c9 ${sideIncomeStart}deg, #0c48c9 ${sideIncomeEnds}deg, orange ${sideIncomeEnds}deg, orange ${giftsEnd}deg, green ${giftsEnd}deg)`
+        background:conicGradient
     }
 
     
@@ -33,7 +46,7 @@ export default function ProgressBar(props) {
         <div>
             <section className="progress-bar" style={ProgressBarStyle}>
                 <span className="progress-value">
-                    <small>Salary <span className="value"><CountUp duration={stats.percentage.sideIncome() / 12} className="counter" end={stats.percentage.salary()}></CountUp>
+                    <small>Salary <span className="value"><CountUp duration={stats.percentage.sideIncome() / 12} className="counter" end={salaryPercentage}></CountUp>
                     %
                     </span>
                     </small>
@@ -44,19 +57,19 @@ export default function ProgressBar(props) {
                 <div className="legend">
                     <div className="legend-container">
                         <div className="salary-legend"></div>
-                        <h3 className="legend-description">Salary <span className="value-span">{Math.round(stats.percentage.salary())}% ({stats.absolute.salary}€)</span></h3>
+                        <h3 className="legend-description">Salary <span className="value-span">{Math.round(salaryPercentage)}% ({stats.absolute.salary}€)</span></h3>
                     </div>
                     <div className="legend-container">
                         <div className="side-income-legend"></div>
-                        <h3 className="legend-description">Side Income <span className="value-span">{Math.round(stats.percentage.sideIncome())}%  ({stats.absolute.sideIncome}€)</span></h3>
+                        <h3 className="legend-description">Side Income <span className="value-span">{Math.round(sideIncomePercentage)}%  ({stats.absolute.sideIncome}€)</span></h3>
                     </div>
                     <div className="legend-container">
                         <div className="gifts-legend"></div>
-                        <h3 className="legend-description">Gifts <span className="value-span">{Math.round(stats.percentage.gifts())}% ({stats.absolute.gifts}€)</span></h3>
+                        <h3 className="legend-description">Gifts <span className="value-span">{Math.round(giftsPercentage)}% ({stats.absolute.gifts}€)</span></h3>
                     </div>
                     <div className="legend-container">
                         <div className="other-legend"></div>
-                        <h3 className="legend-description">Other <span className="value-span">{Math.round(stats.percentage.other())}% ({stats.absolute.other}€)</span></h3>
+                        <h3 className="legend-description">Other <span className="value-span">{Math.round(otherPercentage)}% ({stats.absolute.other}€)</span></h3>
                     </div>
                 </div>
             </section>

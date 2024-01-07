@@ -10,10 +10,10 @@ export default function Home() {
     const handleSubmit = (e) => {
         e.preventDefault();
         setStats(oldStats => {
-            let salVal = e.target.salary.value;
-            let sideVal = e.target.sideIncome.value;
-            let giftVal = e.target.gifts.value;
-            let otherVal = e.target.other.value;
+            let salVal = parseInt(e.target.salary.value);
+            let sideVal = parseInt(e.target.sideIncome.value);
+            let giftVal = parseInt(e.target.gifts.value);
+            let otherVal = parseInt(e.target.other.value);
             
             return {
                 absolute:
@@ -24,7 +24,7 @@ export default function Home() {
                     other: otherVal
                 }, 
                 percentage: {
-                    total: parseInt(salVal) + parseInt(sideVal) + parseInt(giftVal) + parseInt(otherVal),
+                    total: salVal + sideVal + giftVal + otherVal,
                     
                     salary: function() {
                         return salVal/this.total * 100
