@@ -6,10 +6,11 @@ import ExpenseBar from "../components/ExpenseBar";
 import {nanoid} from "nanoid";
 
 export default function Main() {
-    const { expenses, setExpenses, stats } = useContext(AppContext);
+    const [select, setSelect] = useState("Expense")
+    const { expenses, setExpenses, stats, setStats } = useContext(AppContext);
     let last;
 
-    const submitForm = (e) => {
+    const submitFormExpense = (e) => {
         e.preventDefault();
         
        
@@ -27,6 +28,31 @@ export default function Main() {
         })
     }
 
+    const submitFormIncome = (e) => {
+        e.preventDefault();
+
+
+        setStats(oldStats => {
+            let cat = e.target.category.value;
+            let amount = e.target.amount.value;
+            return {
+                ...oldStats,
+                absolute : {...oldStats.absolute, 
+                    salary: cat === "salary" ? parseInt(oldStats.absolute.salary) + parseInt(amount) : oldStats.absolute.salary,
+                    sideIncome: cat === "sideIncome" ? parseInt(oldStats.absolute.sideIncome) + parseInt(amount) : oldStats.absolute.sideIncome,
+                    gifts: cat === "gifts" ? parseInt(oldStats.absolute.gifts) + parseInt(amount) : oldStats.absolute.gifts,
+                    other: cat === "other" ? parseInt(oldStats.absolute.other) + parseInt(amount) : oldStats.absolute.other
+                
+                },
+                percentage: {...oldStats.percentage, 
+                    total: oldStats.absolute.salary + oldStats.absolute.sideIncome + oldStats.absolute.gifts + oldStats.absolute.other
+                }
+            }
+        })
+
+    }
+
+
     const remove = (identification) => {
         const obj1 = expenses.absolute.filter((obj) => {
             return obj.id === identification;
@@ -40,6 +66,7 @@ export default function Main() {
             }
         })
     }
+
 
 
     if(expenses.absolute) {
@@ -73,6 +100,7 @@ export default function Main() {
     }
     
 
+    console.log("stats",stats);
     
     return(
         <div className="main-page">
@@ -85,7 +113,12 @@ export default function Main() {
                     <section className="balance">
                         <h1>Balance</h1>
                         <h2 className="balance-total">{stats.percentage.total - expenses?.total}€</h2>
-                        <form className="add-item" onSubmit={submitForm}>
+                        {select === "Expense" ?
+                        <form className="add-item" onSubmit={submitFormExpense}>
+                            <select className="category field" name="type" onChange={(e) => setSelect(e.target.value)}>
+                                <option>Expense</option>
+                                <option>Income</option>
+                            </select>
                             <select className="category field" name="category">
                                 <option>Bills</option>
                                 <option>Food and Drinks</option>
@@ -100,10 +133,27 @@ export default function Main() {
                             <input className="field" name="amount" placeholder="Amount (€)"></input>
                             <button type="submit" className="submit-button">Submit</button>
                         </form>
+                        :
+                        <form className="add-item" onSubmit={submitFormIncome}>
+                            <select className="category field" name="type" onChange={(e) => setSelect(e.target.value)}>
+                                <option>Expense</option>
+                                <option>Income</option>
+                            </select>
+                            <select className="category field" name="category">
+                                <option value="salary">Salary</option>
+                                <option value="sideIncome">Side Income</option>
+                                <option value="gifts">Gifts</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <input type="date" className="field" name="date"></input>
+                            <input className="field" name="amount" placeholder="Amount (€)"></input>
+                            <button type="submit" className="submit-button">Submit</button>
+                        </form>
+                        }
                         <div className="recent-transactions">
                             <hr />
-                            <h2 className="transactions">Recent Transactions</h2>
-                            <div>{last?.sort((a, b) => a - b).reverse().slice(0, 4)}</div>
+                            <h2 className="transactions">Recent Expenses</h2>
+                            <div>{last?.sort((a, b) => a - b).reverse().slice(0, 3)}</div>
                         </div>
                         
                     </section>
