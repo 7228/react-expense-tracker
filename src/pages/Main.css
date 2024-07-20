@@ -83,6 +83,7 @@
 .field {
     background-color: #fff;
     color:#000;
+    margin: auto;
     width: 90%;
     height: 40px;
     border: none;
@@ -142,4 +143,50 @@
     font-size: 30px;
     color: white;
     cursor: pointer;
+}
+
+@media screen and (max-width:640px) {
+    .main-page {
+        height: fit-content;
+    }
+    .main-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: fit-content;
+    }
+    .income {
+        margin-left: 0;
+    }
+    .budget {
+        width: 80%;
+    }
+    .balance-container {
+        width: 80%;
+        margin-top: 40px;
+    }
+
+    .balance {
+        height: fit-content;
+        padding-bottom: 30px;
+    }
+
+    .add-item {
+        margin: auto;
+    }
+
+    .submit-button {
+        margin-left: 0;
+    }
+    
+    .recent-transactions {
+        position: static;
+        margin-top: 20px;
+        width: 100%;
+    }
+
+    .expense {
+        height: fit-content;
+        margin-top: 40px;
+    }
 }
