@@ -155,14 +155,12 @@ export default function Main() {
                             <h2 className="transactions">Recent Expenses</h2>
                             <div>{last?.sort((a, b) => a - b).reverse().slice(0, 3)}</div>
                         </div>
-                        
                     </section>
                 </div>
                 <section className="expense budget">
                     <ExpenseBar />
                 </section>
             </div>
-            
         </div>
     )
 }
